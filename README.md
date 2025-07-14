@@ -58,13 +58,14 @@ pg_public_ip output	Ephemeral external IPv4 address you’ll plug into dbt Cloud
 <details>
 <summary>Default variables</summary>
 
-
+```hcl
 region         = "us-central1"
 db_user        = "dbt"
 db_name        = "mydb"
 dbt_cloud_cidrs = [
   "52.45.144.63/32", "54.81.134.249/32",  # …
 ]
+```
 
 You can override any of these in terraform.auto.tfvars.
 

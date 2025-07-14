@@ -18,6 +18,8 @@ resource "google_compute_firewall" "allow_postgres" {
     ports    = ["5432"]
   }
   source_ranges = var.dbt_cloud_cidrs   # limit exposure to dbt Cloud
+
+  depends_on = [google_project_service.compute_engine]    
 }
 
 resource "google_compute_instance" "pg" {

@@ -63,8 +63,8 @@ resource "google_compute_instance" "pg" {
     # Wait until Postgres responds
     until docker exec pg pg_isready -U ${var.db_user}; do sleep 2; done
 
-    # Load the Jaffle Shop sample data
-    curl -sL https://raw.githubusercontent.com/dbt-labs/jaffle-shop-data/main/postgres/load_postgres.sql \
+    # Load some Netflix sample data
+    curl -sL https://raw.githubusercontent.com/neondatabase-labs/postgres-sample-dbs/refs/heads/main/netflix.sql \
       -o /tmp/load.sql
     PGPASSWORD=${var.db_password} psql -h localhost -U ${var.db_user} -d ${var.db_name} -f /tmp/load.sql
   EOF

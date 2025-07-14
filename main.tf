@@ -4,10 +4,16 @@ provider "google" {
   zone    = "${var.region}-b"
 }
 
-resource "google_project_service" "compute_engine" {
+# Enable both APIs in a single, DRY block
+resource "google_project_service" "essential_apis" {
+  for_each = toset([
+    "compute.googleapis.com",
+    "cloudresourcemanager.googleapis.com",
+  ])
+
   project             = var.project_id
-  service             = "compute.googleapis.com"
-  disable_on_destroy  = false  # keep it enabled even if you 'terraform destroy'
+  service             = each.key
+  disable_on_destroy  = false
 }
 
 resource "google_compute_firewall" "allow_postgres" {
@@ -19,7 +25,7 @@ resource "google_compute_firewall" "allow_postgres" {
   }
   source_ranges = var.dbt_cloud_cidrs   # limit exposure to dbt Cloud
 
-  depends_on = [google_project_service.compute_engine]    
+  depends_on = [google_project_service.essential_apis]    
 }
 
 resource "google_compute_instance" "pg" {
@@ -62,5 +68,5 @@ resource "google_compute_instance" "pg" {
     PGPASSWORD=${var.db_password} psql -h localhost -U ${var.db_user} -d ${var.db_name} -f /tmp/load.sql
   EOF
 
-  depends_on = [google_project_service.compute_engine]  
+  depends_on = [google_project_service.essential_apis]  
 }

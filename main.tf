@@ -4,6 +4,12 @@ provider "google" {
   zone    = "${var.region}-b"
 }
 
+resource "google_project_service" "compute_engine" {
+  project             = var.project_id
+  service             = "compute.googleapis.com"
+  disable_on_destroy  = false  # keep it enabled even if you 'terraform destroy'
+}
+
 resource "google_compute_firewall" "allow_postgres" {
   name    = "allow-postgres-dbt"
   network = "default"
@@ -53,4 +59,6 @@ resource "google_compute_instance" "pg" {
       -o /tmp/load.sql
     PGPASSWORD=${var.db_password} psql -h localhost -U ${var.db_user} -d ${var.db_name} -f /tmp/load.sql
   EOF
+
+  depends_on = [google_project_service.compute_engine]  
 }

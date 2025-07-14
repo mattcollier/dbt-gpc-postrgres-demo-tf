@@ -2,7 +2,7 @@ variable "project_id"            {}
 variable "region"     { default = "us-central1" }    # free-tier region
 variable "db_user"    { default = "dbt" }
 variable "db_password"           {}
-variable "db_name"    { default = "jaffleshop" }
+variable "db_name"    { default = "mydb" }
 
 # dbt Cloud publishes its egress ranges here:
 # https://docs.getdbt.com/docs/cloud/about-cloud/access-regions-ip-addresses

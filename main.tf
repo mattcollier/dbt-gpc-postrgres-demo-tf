@@ -29,7 +29,6 @@ resource "google_compute_firewall" "allow_postgres" {
   depends_on = [google_project_service.compute_engine]    
 }
 
-/*
 resource "google_compute_instance" "pg" {
   name         = "pg-demo"
   machine_type = "e2-micro"            # free-tier size  [oai_citation:4‡Google Cloud](https://cloud.google.com/free/docs/compute-getting-started?utm_source=chatgpt.com)
@@ -72,4 +71,3 @@ resource "google_compute_instance" "pg" {
 
   depends_on = [google_project_service.compute_engine]  
 }
-*/

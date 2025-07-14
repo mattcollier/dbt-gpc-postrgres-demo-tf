@@ -7,8 +7,8 @@ provider "google" {
 # Enable both APIs in a single, DRY block
 resource "google_project_service" "essential_apis" {
   for_each = toset([
+    "cloudresourcemanager.googleapis.com",    
     "compute.googleapis.com",
-    "cloudresourcemanager.googleapis.com",
   ])
 
   project             = var.project_id

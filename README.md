@@ -115,10 +115,11 @@ You will be billed for:
 ⸻
 
 Repository layout
-
+```txt
 ├── main.tf          # Core resources
 ├── variables.tf     # Minimal inputs
 ├── outputs.tf       # pg_public_ip
 └── README.md
+```
 
 Happy querying! 🚀
